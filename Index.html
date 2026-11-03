@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Magic | Kavin 🎂</title>
+
+<style>
+*{box-sizing:border-box}
+:root{--pink:#ff75b8;--purple:#a66cff;--ink:#48234f}
+body{margin:0;min-height:100vh;padding:20px;display:grid;place-items:center;overflow-x:hidden;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 10% 10%,#ffe0f0,transparent 35%),radial-gradient(circle at 90% 20%,#e9dcff,transparent 35%),linear-gradient(145deg,#fff8fc,#f5edff)}
+.card{width:min(720px,100%);padding:clamp(22px,6vw,48px);text-align:center;background:#ffffffdf;backdrop-filter:blur(12px);border:1px solid white;border-radius:30px;box-shadow:0 20px 70px #a55ba51c;animation:pop .8s ease}
+@keyframes pop{from{opacity:0;transform:translateY(25px) scale(.95)}to{opacity:1;transform:none}}
+.tag{display:inline-block;padding:8px 14px;border-radius:50px;background:#fff0f7;color:#b34483;font-size:.75rem;font-weight:bold;letter-spacing:2px}
+h1{font-size:clamp(2.5rem,9vw,4.5rem);line-height:1.02;letter-spacing:-2px;margin:22px 0 12px;background:linear-gradient(110deg,#ef5d9f,#a45ce6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{color:#795b80;line-height:1.7;font-size:1.05rem}
+.cake{font-size:110px;cursor:pointer;display:inline-block;margin:20px 0 5px;animation:bob 3s infinite ease-in-out;filter:drop-shadow(0 10px 12px #e59bc633)}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.tap{font-size:.8rem;color:#a26e9e}
+.message{margin-top:25px;padding:22px;border-radius:22px;background:linear-gradient(135deg,#fff2f8,#f5efff);line-height:1.8}
+.choco{margin-top:15px;padding:18px;border:2px dashed #e8b5d2;border-radius:20px;background:#fffafc}
+.choco .emoji{font-size:2.5rem}
+.extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:22px auto}
+button{font:inherit;font-weight:bold;border:0;border-radius:18px;padding:14px;cursor:pointer;transition:.2s}
+button:active{transform:scale(.96)}
+.mini{background:white;border:1px solid #f3d9eb;color:#875b88;line-height:1.5}
+.mini span{display:block;font-size:2rem}
+.primary{background:linear-gradient(110deg,#f36ba9,#a96bea);color:white;border-radius:50px}
+.secondary{background:#fff0f7;color:#a34a83;border-radius:50px}
+.buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.reveal{margin:15px auto;padding:18px;border-radius:18px;background:#fff8df;color:#8d6434;line-height:1.7;animation:pop .3s}
+.hidden{display:none!important}
+.reply{min-height:25px;margin-top:15px;color:#9c5c91}
+footer{margin-top:30px;font-size:.85rem;color:#a17da5}
+footer b{color:#b24d91}
+.float{position:fixed;bottom:-40px;pointer-events:none;animation:rise linear infinite;z-index:0}
+@keyframes rise{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.confetti{position:fixed;top:-20px;width:9px;height:14px;z-index:20;pointer-events:none;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(800deg);opacity:.1}}
+.modal{position:fixed;inset:0;background:#46234f99;display:grid;place-items:center;padding:20px;z-index:30}
+.modalbox{width:min(420px,100%);padding:28px;border-radius:25px;background:white;text-align:center;animation:pop .3s}
+.modalbox h2{color:#bb4c91}
+.modalbox p{line-height:1.8;color:#795b80}
+</style>
+</head>
+
+<body>
+
+<main class="card">
+
+<div class="tag">A LITTLE BIRTHDAY MAGIC ✨</div>
+
+<h1>THANK YOU<br>SO MUCH! 💖</h1>
+
+<p class="subtitle">
+For every wish, message, call, and little bit of birthday love…
+you made my day extra special.
+</p>
+
+<div class="cake" id="cake">🎂</div>
+
+<p class="tap">Psst… tap the cake for a surprise!</p>
+
+<section class="message">
+
+<p>
+Today feels brighter because of all of you.
+Every wish means a lot, and I’m genuinely grateful. 🥹
+</p>
+
+<div class="choco">
+<div class="emoji">🍫</div>
+<strong>ABOUT THE CHOCOLATES…</strong>
+<p>
+I actually planned to give chocolates to everyone,
+but people emptied the whole stash before I could! 😭
+</p>
+<em>
+Sorry, guys. The chocolate department has officially gone bankrupt.
+</em>
+</div>
+
+</section>
+
+<div class="extras">
+
+<button class="mini" id="wish">
+<span>🫙</span>Open the wish jar
+</button>
+
+<button class="mini" id="secret">
+<span>💌</span>Secret birthday note
+</button>
+
+<button class="mini" id="chocolate">
+<span>🍫</span>Chocolate audit
+</button>
+
+</div>
+
+<div id="extraReveal" class="reveal hidden"></div>
+
+<div class="buttons">
+
+<button class="primary" id="party">
+🎉 Celebrate again
+</button>
+
+<button class="secondary" id="hug">
+💌 Send a tiny thank-you
+</button>
+
+</div>
+
+<div class="reply" id="reply"></div>
+
+<footer>
+Made with ❤️ by <b>Kavin</b>
+</footer>
+
+</main>
+
+<div class="modal hidden" id="modal">
+
+<div class="modalbox">
+
+<div style="font-size:3rem">💌</div>
+
+<h2>A little secret…</h2>
+
+<p>
+To everyone who remembered, messaged, called,
+or simply sent good vibes:
+you made this birthday feel like a whole celebration.
+
+I may have run out of chocolates,
+but I definitely haven't run out of gratitude. ❤️
+</p>
+
+<button class="primary" id="closeModal">
+Aww, okay! ✨
+</button>
+
+</div>
+</div>
+
+<script>
+
+// FLOATING EMOJIS
+
+const symbols=["✨","💖","⭐","🌸","🎈"];
+
+for(let i=0;i<25;i++){
+const el=document.createElement("span");
+el.className="float";
+el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+el.style.left=Math.random()*100+"%";
+el.style.animationDuration=(8+Math.random()*13)+"s";
+el.style.animationDelay=(-Math.random()*18)+"s";
+el.style.fontSize=(16+Math.random()*20)+"px";
+document.body.appendChild(el);
+}
+
+// CONFETTI
+
+function confetti(){
+const colors=["#ff78b7","#b88aff","#ffd166","#8ee3d2","#ff9f68"];
+
+for(let i=0;i<100;i++){
+const c=document.createElement("i");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+c.style.background=colors[Math.floor(Math.random()*colors.length)];
+c.style.animationDuration=(1.8+Math.random()*2)+"s";
+c.style.borderRadius=Math.random()>.5?"50%":"2px";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),4500);
+}
+}
+
+// CAKE SURPRISE
+
+const cake=document.getElementById("cake");
+
+cake.onclick=()=>{
+cake.textContent="🧁";
+document.getElementById("reply").textContent=
+"Birthday wish unlocked! May your day be full of sweet moments. 💫";
+confetti();
+setTimeout(()=>cake.textContent="🎂",1300);
+};
+
+// CELEBRATION
+
+document.getElementById("party").onclick=()=>{
+confetti();
+document.getElementById("reply").textContent=
+"BIRTHDAY MODE: ACTIVATED! 🎊 Thanks for making my day unforgettable!";
+};
+
+// THANK YOU
+
+document.getElementById("hug").onclick=()=>{
+document.getElementById("reply").textContent=
+"Thank you for being part of my day. Sending you a pocket-sized bundle of birthday gratitude! 💌";
+confetti();
+};
+
+// WISH JAR
+
+document.getElementById("wish").onclick=()=>{
+
+const wishes=[
+"May your week be full of unexpected good news. 🌟",
+"May your next laugh be the kind you can't stop. 😂",
+"May something you've been working for finally click. ✨",
+"May your people keep showing up for you. 💖",
+"May life bring you a little extra magic. 🪄"
+];
+
+const randomWish=wishes[Math.floor(Math.random()*wishes.length)];
+
+const reveal=document.getElementById("extraReveal");
+reveal.classList.remove("hidden");
+reveal.textContent="🫙 Wish from the jar: "+randomWish;
+
+confetti();
+};
+
+// SECRET LETTER
+
+document.getElementById("secret").onclick=()=>{
+document.getElementById("modal").classList.remove("hidden");
+};
+
+document.getElementById("closeModal").onclick=()=>{
+document.getElementById("modal").classList.add("hidden");
+};
+
+document.getElementById("modal").onclick=(e)=>{
+if(e.target.id==="modal"){
+e.currentTarget.classList.add("hidden");
+}
+};
+
+// CHOCOLATE INVESTIGATION
+
+let chocolateCount=0;
+
+document.getElementById("chocolate").onclick=()=>{
+
+chocolateCount++;
+
+const reveal=document.getElementById("extraReveal");
+reveal.classList.remove("hidden");
+
+if(chocolateCount===1){
+reveal.textContent=
+"🍫 Audit result: 0 chocolates remaining. Suspects: literally everyone.";
+}
+else if(chocolateCount===2){
+reveal.textContent=
+"📋 Further investigation confirms: the chocolate stash has vanished without a trace.";
+}
+else{
+reveal.textContent=
+"🚨 Case closed. I forgive you all… but next year, bring your own chocolate.";
+}
+
+};
+
+</script>
+
+</body>
+</html>
